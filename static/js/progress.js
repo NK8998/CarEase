@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
       limit: 5,
       summary: true,
     },
+    with: "100%",
     sort: true,
   });
 
@@ -119,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const createTable = (data) => {
   table
     .updateConfig({
+      with: "100%",
       data: data,
     })
     .forceRender();
