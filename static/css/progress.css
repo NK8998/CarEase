@@ -21,6 +21,7 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 .action-row input{
     width: 210px;
@@ -80,4 +81,11 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+@media (max-width: 500px) {
+    .bounding-container{
+        padding: 30px 10px;        
+    }
+    
 }
