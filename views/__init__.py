@@ -8,6 +8,5 @@ from . import index
 from . import about
 from . import services
 from . import contact
-from . import booking
-from . import team
-from . import testimonial
+from . import progress
+from . import tracking

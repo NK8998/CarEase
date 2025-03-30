@@ -5,7 +5,7 @@ from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
 load_dotenv()  
 
-async def sendMail(email, name, subject, receipt_id):
+async def sendMail(email, name, subject, receipt_id, legible_date, service_name):
     """
     Send a crafted appointment confirmation email using SendGrid API.
 
@@ -16,9 +16,10 @@ async def sendMail(email, name, subject, receipt_id):
     html_content = f"""
     <div style="font-family: Arial, sans-serif; padding: 20px;">
         <h2 style="color: #2c3e50;">Hello, {name}</h2>
-        <p>Your appointment for <strong>car servicing</strong> has been successfully added!</p>
+        <p><strong>Appointment Date:</strong> {legible_date}</p>
+        <p>Your appointment for <strong>{service_name}</strong> has been successfully added!</p>
         <p>You can track the progress of your service by visiting:</p>
-        <p><a href="https://CarEase.com/progress" style="color: #3498db;">CarEase.com/progress</a></p>
+        <p><a href="https://carease-production.up.railway.app/progress" style="color: #3498db;">CarEase.com/progress</a></p>
         <p>Then, simply paste this receipt ID:</p>
         <p style="font-size: 18px; font-weight: bold; color: #27ae60;">{receipt_id}</p>
         <p>Have a great day and drive safe!</p>

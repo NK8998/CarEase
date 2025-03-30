@@ -17,15 +17,28 @@ tb_create_str = '''
                     price REAL                     -- Optional for demo
                 );
 
+                --Transactions
+                CREATE TABLE IF NOT EXISTS transactions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    appointment_id INTEGER,        -- Link to the appointment
+                    amount REAL NOT NULL,
+                    payment_method TEXT NOT NULL,  -- e.g. M-Pesa, Cash, Card, etc.
+                    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    status TEXT DEFAULT 'pending',  -- pending, completed, failed
+                    reference_id TEXT UNIQUE,       -- Unique reference for payment tracking
+                    FOREIGN KEY (appointment_id) REFERENCES appointments(id)
+                );
+
                 -- Appointments / Bookings
                 CREATE TABLE IF NOT EXISTS appointments (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER,               -- Can be NULL if no login
                     customer_name TEXT NOT NULL,   -- For walk-ins or demo without login
                     email TEXT NOT NULL,           -- For notifications
-                    phone TEXT,
+                    phone TEXT NOT NULL,           -- For notifications
                     service_id INTEGER NOT NULL,
                     appointment_date DATETIME NOT NULL,
+                    end_date DATETIME NOT NULL,    -- Optional, if you want to track duration
                     special_request TEXT,        -- Optional, for any special requests
                     receipt_id TEXT UNIQUE,        -- This will be their "ticket" for tracking
                     status TEXT DEFAULT 'pending', -- pending, confirmed, in-progress, completed

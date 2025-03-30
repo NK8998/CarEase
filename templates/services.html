@@ -53,6 +53,23 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/services.css') }}"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js"
+      integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
+    <!-- Add CSS in head -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/js-toast-notifier/dist/index.css"
+    />
   </head>
 
   <body>
@@ -126,25 +143,15 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="/" class="nav-item nav-link">Home</a>
-          <a href="about" class="nav-item nav-link">About</a>
-          <a href="service" class="nav-item nav-link active">Services</a>
-          <div class="nav-item dropdown">
-            <a
-              href="#"
-              class="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-              >Pages</a
-            >
-            <div class="dropdown-menu fade-up m-0">
-              <a href="booking" class="dropdown-item">Booking</a>
-              <a href="team" class="dropdown-item">Technicians</a>
-              <a href="testimonial" class="dropdown-item">Testimonial</a>
-            </div>
-          </div>
-          <a href="contact" class="nav-item nav-link">Contact</a>
+          <a href="/about" class="nav-item nav-link">About</a>
+          <a href="/services" class="nav-item nav-link active">Services</a>
+          <a href="/tracking" class="nav-item nav-link">Tracking</a>
+          <a href="/contact" class="nav-item nav-link">Contact</a>
         </div>
-        <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"
-          >Get A Quote<i class="fa fa-arrow-right ms-3"></i
+        <a
+          href="/progress"
+          class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"
+          >Progress<i class="fa fa-arrow-right ms-3"></i
         ></a>
       </div>
     </nav>
@@ -419,13 +426,14 @@
               data-wow-delay="0.6s"
             >
               <h1 class="text-white mb-4">Book For A Service</h1>
-              <form>
+              <form onsubmit="handleSubmit(event)" method="post">
                 <div class="row g-3">
                   <div class="col-12 col-sm-6">
                     <input
                       type="text"
                       class="form-control border-0"
-                      placeholder="Your Name"
+                      placeholder="Full Name"
+                      name="name"
                       style="height: 55px"
                     />
                   </div>
@@ -434,19 +442,41 @@
                       type="email"
                       class="form-control border-0"
                       placeholder="Your Email"
+                      name="email"
                       style="height: 55px"
                     />
                   </div>
                   <div class="col-12 col-sm-6">
-                    <select class="form-select border-0" style="height: 55px">
+                    <input
+                      type="phone"
+                      class="form-control border-0"
+                      placeholder="07XXXXXXXX"
+                      name="phone"
+                      style="height: 55px"
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <select
+                      class="form-select border-0"
+                      style="height: 55px"
+                      name="service"
+                    >
                       <option selected>Select A Service</option>
-                      <option value="1">Service 1</option>
-                      <option value="2">Service 2</option>
-                      <option value="3">Service 3</option>
+                      <option value="1">Diagnostics Test</option>
+                      <option value="2">Engine Service</option>
+                      <option value="3">Tires Replacement</option>
+                      <option value="4">Oil Changing</option>
+                      <option value="5">Brake Repair</option>
+                      <option value="6">Car Wash & Detailing</option>
                     </select>
                   </div>
                   <div class="col-12 col-sm-6">
-                    <div class="date" id="date1" data-target-input="nearest">
+                    <div
+                      class="date"
+                      id="date1"
+                      data-target-input="nearest"
+                      style="position: relative"
+                    >
                       <input
                         type="text"
                         class="form-control border-0 datetimepicker-input"
@@ -454,6 +484,7 @@
                         data-target="#date1"
                         data-toggle="datetimepicker"
                         style="height: 55px"
+                        name="start_date"
                       />
                     </div>
                   </div>
@@ -461,11 +492,26 @@
                     <textarea
                       class="form-control border-0"
                       placeholder="Special Request"
+                      name="special_request"
                     ></textarea>
                   </div>
                   <div class="col-12">
-                    <button class="btn btn-secondary w-100 py-3" type="submit">
-                      Book Now
+                    <button
+                      class="book-btn btn btn-secondary w-100 py-3"
+                      type="submit"
+                    >
+                      <span>Book Now</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 -960 960 960"
+                        width="24px"
+                        fill="#000000"
+                      >
+                        <path
+                          d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -592,11 +638,11 @@
           </div>
           <div class="col-lg-3 col-md-6">
             <h4 class="text-light mb-4">Services</h4>
-            <a class="btn btn-link" href="">Diagnostic Test</a>
-            <a class="btn btn-link" href="">Engine Servicing</a>
-            <a class="btn btn-link" href="">Tires Replacement</a>
-            <a class="btn btn-link" href="">Oil Changing</a>
-            <a class="btn btn-link" href="">Vacuam Cleaning</a>
+            <a class="btn btn-link" href="/services">Diagnostic Test</a>
+            <a class="btn btn-link" href="/services">Engine Servicing</a>
+            <a class="btn btn-link" href="/services">Tires Replacement</a>
+            <a class="btn btn-link" href="/services">Oil Changing</a>
+            <a class="btn btn-link" href="/services">Vacuam Cleaning</a>
           </div>
           <div class="col-lg-3 col-md-6">
             <h4 class="text-light mb-4">Newsletter</h4>
@@ -662,5 +708,7 @@
     <script src="{{ url_for('static', filename='lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/services.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toast-notifier/dist/index.umd.js"></script>
   </body>
 </html>

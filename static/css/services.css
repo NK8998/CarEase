@@ -1,0 +1,25 @@
+.book-btn{
+    display: grid;
+    place-items: center;
+}
+.book-btn svg{
+    display: none;
+    animation: spin 1s linear infinite;
+    fill: white;
+}
+.book-btn.disabled svg{
+    display: block;
+}
+.book-btn.disabled span
+{
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

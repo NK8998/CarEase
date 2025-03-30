@@ -8,6 +8,7 @@ def drop_tables(conn):
     try:
         cursor = conn.cursor()
         cursor.executescript('''
+            DROP TABLE IF EXISTS transactions;
             DROP TABLE IF EXISTS appointment_tracking;
             DROP TABLE IF EXISTS appointments;
             DROP TABLE IF EXISTS services;
