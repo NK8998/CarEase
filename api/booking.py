@@ -2,7 +2,7 @@ from flask import request, jsonify
 from . import bp  # import the Blueprint instance
 import sqlite3
 import nanoid
-from .util import sendMail
+from .util import createMail
 import hashlib
 import base64
 
@@ -42,7 +42,7 @@ async def create_booking():
         except sqlite3.Error as e:
             return jsonify({"error": str(e)}), 500
         
-    await sendMail(email, customer_name, "Booking Confirmation", email_hash, legible_date, service_name)
+    await createMail(email, customer_name, "Booking Confirmation", email_hash, legible_date, service_name)
 
     # Process data here...
     return jsonify({"message": "Booking created successfully", "data": data}), 201

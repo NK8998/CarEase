@@ -390,6 +390,32 @@
     display: none;
 }
 
+.contact-btn{
+    display: grid;
+    place-items: center;
+}
+.contact-btn svg{
+    display: none;
+    animation: spin 1s linear infinite;
+    fill: white;
+}
+.contact-btn.disabled svg{
+    display: block;
+}
+.contact-btn.disabled span
+{
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 @media (max-width: 991.98px) {
     .xl-hidden{

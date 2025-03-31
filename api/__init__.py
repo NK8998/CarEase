@@ -7,3 +7,4 @@ bp = Blueprint('api', __name__)
 from . import booking
 from . import appointments
 from . import daraja
+from . import contact

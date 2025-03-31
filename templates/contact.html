@@ -53,6 +53,22 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js"
+      integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
+    <!-- Add CSS in head -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/js-toast-notifier/dist/index.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -213,7 +229,7 @@
           <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
             <iframe
               class="position-relative rounded w-100 h-100"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Nairobi,%20Kenya+(CarEase)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
               frameborder="0"
               style="min-height: 350px; border: 0"
               allowfullscreen=""
@@ -224,12 +240,17 @@
           <div class="col-md-6">
             <div class="wow fadeInUp" data-wow-delay="0.2s">
               <p class="mb-4">
-                The contact form is currently inactive. Get a functional and
-                working contact form with Ajax & PHP in a few minutes. Just copy
-                and paste the files, add a little code and you're done.
-                <a href="https://htmlcodex.com/contact-form">Download Now</a>.
+                <i class="fa fa-check text-primary me-3"></i
+                ><span
+                  >We are here to help you with any questions or concerns you
+                  may have. Please fill out the form below and we will get back
+                  to you as soon as possible.</span
+                >
+                <a href="https://web.whatsapp.com/"
+                  >You can reach us here as well</a
+                >
               </p>
-              <form>
+              <form onsubmit="handleSubmit(event)">
                 <div class="row g-3">
                   <div class="col-md-6">
                     <div class="form-floating">
@@ -237,7 +258,9 @@
                         type="text"
                         class="form-control"
                         id="name"
+                        name="name"
                         placeholder="Your Name"
+                        required
                       />
                       <label for="name">Your Name</label>
                     </div>
@@ -248,7 +271,9 @@
                         type="email"
                         class="form-control"
                         id="email"
+                        name="email"
                         placeholder="Your Email"
+                        required
                       />
                       <label for="email">Your Email</label>
                     </div>
@@ -259,6 +284,8 @@
                         type="text"
                         class="form-control"
                         id="subject"
+                        name="subject"
+                        required
                         placeholder="Subject"
                       />
                       <label for="subject">Subject</label>
@@ -271,13 +298,29 @@
                         placeholder="Leave a message here"
                         id="message"
                         style="height: 100px"
+                        name="message"
+                        required
                       ></textarea>
                       <label for="message">Message</label>
                     </div>
                   </div>
                   <div class="col-12">
-                    <button class="btn btn-primary w-100 py-3" type="submit">
-                      Send Message
+                    <button
+                      class="btn btn-primary w-100 py-3 contact-btn"
+                      type="submit"
+                    >
+                      <span>Send Message</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 -960 960 960"
+                        width="24px"
+                        fill="#000000"
+                      >
+                        <path
+                          d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -401,5 +444,8 @@
     <script src="{{ url_for('static', filename='lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toast-notifier/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
   </body>
 </html>

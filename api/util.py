@@ -5,7 +5,27 @@ from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
 load_dotenv()  
 
-async def sendMail(email, name, subject, email_hash, legible_date, service_name):
+async def sendMail(email, subject, html_content):
+    try:
+        key = os.getenv("SENDGRID_API_KEY")
+        if key is None:
+            raise ValueError("SENDGRID_API_KEY not found in environment variables")
+        sg = SendGridAPIClient(api_key=key)
+        message = Mail(
+            from_email='hello@streamgrid.site',
+            to_emails=email,
+            subject=subject,
+            html_content=html_content
+        )
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
+    pass
+
+async def createMail(email, name, subject, email_hash, legible_date, service_name):
     """
     Send a crafted appointment confirmation email using SendGrid API.
 
@@ -28,21 +48,4 @@ async def sendMail(email, name, subject, email_hash, legible_date, service_name)
         <p style="color: #95a5a6; font-size: 12px;">CarEase Team</p>
     </div>
     """
-
-    try:
-        key = os.getenv("SENDGRID_API_KEY")
-        if key is None:
-            raise ValueError("SENDGRID_API_KEY not found in environment variables")
-        sg = SendGridAPIClient(api_key=key)
-        message = Mail(
-            from_email='hello@streamgrid.site',
-            to_emails=email,
-            subject=subject,
-            html_content=html_content
-        )
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as e:
-        print(e)
+    await sendMail(email, subject, html_content)
