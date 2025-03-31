@@ -5,13 +5,13 @@ from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
 load_dotenv()  
 
-async def sendMail(email, name, subject, receipt_id, legible_date, service_name):
+async def sendMail(email, name, subject, email_hash, legible_date, service_name):
     """
     Send a crafted appointment confirmation email using SendGrid API.
 
     :param email: Recipient's email address
     :param subject: Subject of the email
-    :param receipt_id: Unique receipt ID for the appointment
+    :param email_hash: Unique hash for the appointment
     """
     html_content = f"""
     <div style="font-family: Arial, sans-serif; padding: 20px;">
@@ -20,8 +20,8 @@ async def sendMail(email, name, subject, receipt_id, legible_date, service_name)
         <p>Your appointment for <strong>{service_name}</strong> has been successfully added!</p>
         <p>You can track the progress of your service by visiting:</p>
         <p><a href="https://carease-production.up.railway.app/progress" style="color: #3498db;">CarEase.com/progress</a></p>
-        <p>Then, simply paste this receipt ID:</p>
-        <p style="font-size: 18px; font-weight: bold; color: #27ae60;">{receipt_id}</p>
+        <p>Then, simply paste this code:</p>
+        <p style="font-size: 18px; font-weight: bold; color: #27ae60;">{email_hash}</p>
         <p>Have a great day and drive safe!</p>
         <img src="https://dxm.content-center.totalenergies.com/api/wedia/dam/transform/xysh7dg731tahpw133wmjuk8by/roadside-vehicle-repair-service-workers-change-mount-tires-garage-car-341509-3419-jpeg.webp?option=default" 
              alt="Car Service" style="width:100%; max-width:600px; margin-top:20px; border-radius:8px;" />

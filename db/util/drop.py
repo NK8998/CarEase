@@ -17,5 +17,3 @@ def drop_tables(conn):
         print("Tables dropped successfully.")
     except sqlite3.Error as e:
         print(f"Error dropping tables: {e}")
-
-drop_tables(sqlite3.connect("CarEase.db"))

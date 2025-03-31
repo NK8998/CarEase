@@ -157,7 +157,7 @@ const getAppointMents = () => {
   const submitBtn = document.querySelector(".submit-btn");
 
   axios
-    .post("/get_appointments", { email: user_email })
+    .post("/get_appointments", { email_hash: user_email })
     .then((response) => {
       toast.success("Appointments fetched successfully!");
       console.log(response.data);
@@ -186,8 +186,8 @@ const handleSubmit = (event) => {
   const data = Object.fromEntries(new FormData(event.target).entries());
   const email = data.email ?? "";
 
-  if (!email) {
-    toast.error("Please provide an email address.");
+  if (!email.trim()) {
+    toast.error("Please enter the code we sent to your email.");
     submitBtn.classList.remove("disabled");
     submitBtn.disabled = false;
     return;

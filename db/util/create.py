@@ -44,6 +44,7 @@ tb_create_str = '''
                     status TEXT DEFAULT 'pending', -- pending, confirmed, in-progress, completed
                     location_lat REAL,             -- Optional, if you want to geotag appointments
                     location_lng REAL,             -- Optional, same as above
+                    email_hash TEXT,            -- Base64 encoded hash of email for security
                     FOREIGN KEY (service_id) REFERENCES services(id)
                 );
 
@@ -68,6 +69,3 @@ def create_tables(conn):
         print("Tables created successfully.")
     except sqlite3.Error as e:
         print(f"Error creating tables: {e}")
-
-# create tables
-create_tables(sqlite3.connect("CarEase.db"))

@@ -3,6 +3,12 @@ from . import bp  # import the Blueprint instance
 import sqlite3
 import nanoid
 from .util import sendMail
+import hashlib
+import base64
+
+def generate_base64_key(email):
+    digest = hashlib.sha256(email.encode()).digest()
+    return base64.urlsafe_b64encode(digest).decode()[:12]  # Trim to 12 chars 
 
 @bp.route("/create_booking", methods=["POST"])
 async def create_booking():
@@ -24,16 +30,19 @@ async def create_booking():
     if not isinstance(customer_name, str) or not isinstance(email, str) or not isinstance(appointment_date, str) or not isinstance(service_id, str) or not isinstance(end_date, str) or not isinstance(legible_date, str) or not isinstance(service_name, str) or not isinstance(phone, str):
         return jsonify({"error": "Invalid data type"}), 400
     
+    email_hash = generate_base64_key(email)
+
+    
     with sqlite3.connect("db/CarEase.db") as conn:
         cursor = conn.cursor()
         try:
-            cursor.execute("INSERT INTO appointments (customer_name, email, special_request, appointment_date, service_id, receipt_id, status, end_date, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                           (customer_name, email, special_request, appointment_date, service_id, receipt_id, status, end_date, phone))
+            cursor.execute("INSERT INTO appointments (customer_name, email, special_request, appointment_date, service_id, receipt_id, status, end_date, phone, email_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                           (customer_name, email, special_request, appointment_date, service_id, receipt_id, status, end_date, phone, email_hash))
             conn.commit()
         except sqlite3.Error as e:
             return jsonify({"error": str(e)}), 500
         
-    await sendMail(email, customer_name, "Booking Confirmation", receipt_id, legible_date, service_name)
+    await sendMail(email, customer_name, "Booking Confirmation", email_hash, legible_date, service_name)
 
     # Process data here...
     return jsonify({"message": "Booking created successfully", "data": data}), 201
