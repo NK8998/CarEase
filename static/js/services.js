@@ -107,3 +107,25 @@ const handleSubmit = async (event) => {
       submitBtn.disabled = false;
     });
 };
+
+/**
+ * @param {Event} event - The event object from the change event
+ */
+const handleServiceChange = (event) => {
+  const selectedOption = event.target.options[event.target.selectedIndex];
+  const price = selectedOption.getAttribute("data-price");
+  if (!price) {
+    return;
+  }
+  const balanceEl = document.querySelector(".balance-span-txt");
+  const totalEl = document.querySelector(".tot-span-txt");
+  const vatEl = document.querySelector(".vat-span-txt");
+  const vat = 0.12 * parseFloat(price); // calculate VAT at 12%
+  const total = 1.12 * parseFloat(price); // multiply by tax rate of 12%
+
+  balanceEl.innerText = `$ ${price}`;
+  totalEl.innerText = `$ ${total.toFixed(2)}`;
+  vatEl.innerText = `$ ${vat.toFixed(2)}`; // Display the VAT amount
+
+  // Add any additional logic to handle the change event here
+};

@@ -385,3 +385,15 @@
 .toast.toast-show{
     opacity: 1;
 }
+
+.xl-hidden{
+    display: none;
+}
+
+
+@media (max-width: 991.98px) {
+    .xl-hidden{
+        display: block;
+    }
+    
+}
