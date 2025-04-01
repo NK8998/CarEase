@@ -31,7 +31,7 @@ const watchLocation = () => {
       console.log("Latitude:", latitude, "Longitude:", longitude);
       // You can send this data to your server or use it as needed
       socket.emit(
-        "location",
+        "message",
         JSON.stringify({
           latitude,
           longitude,
@@ -44,10 +44,24 @@ const watchLocation = () => {
     {
       enableHighAccuracy: false,
       maximumAge: 5000,
-      timeout: 5000,
+      timeout: 30000,
     }
   );
 };
+
+function generateAndEmitRandomLocation() {
+  const latitude = Math.random() * 180 - 90; // Latitude: -90 to 90
+  const longitude = Math.random() * 360 - 180; // Longitude: -180 to 180
+
+  const locationData = {
+    latitude: latitude,
+    longitude: longitude,
+  };
+
+  socket.emit("message", JSON.stringify(locationData));
+
+  console.log("Emitted:", locationData); // Optional: Log the emitted data
+}
 
 /**
  * @param {Event} event
@@ -57,6 +71,8 @@ async function sendMessage(event) {
     console.log("Socket not connected");
     return;
   }
+  // generateAndEmitRandomLocation();
+  // return;
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const { latitude, longitude } = position.coords;
@@ -75,7 +91,7 @@ async function sendMessage(event) {
     {
       enableHighAccuracy: false,
       maximumAge: 5000,
-      timeout: 5000,
+      timeout: 30000,
     }
   );
 }

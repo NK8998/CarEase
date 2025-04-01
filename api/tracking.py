@@ -22,7 +22,7 @@ def handle_message(socketio, data):
             if session_id != sender_session_id:
                 print("Sending message to:", session_id)
                 # Send a message to all clients except the sender
-                socketio.send(f"Message from {sender_session_id}: {data}", to=session_id, namespace="/track_navigator")
+                socketio.send(data, to=session_id, namespace="/track_navigator")
     except Exception as e:
         print(f"Error handling message: {e}")
 
