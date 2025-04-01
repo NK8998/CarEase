@@ -1,10 +1,9 @@
 from flask import request
 from flask_socketio import emit
-from app import socketio
 # api/tracking.py
 clients = {}
 
-def handle_connect():
+def handle_connect(socketio):
     try:
         session_id = request.sid
         clients[session_id] = request.remote_addr  # Optionally, store IP or any other info
@@ -13,7 +12,7 @@ def handle_connect():
     except Exception as e:
         print(f"Error handling connection: {e}")
 
-def handle_message(data):
+def handle_message(socketio, data):
     try:
 
         sender_session_id = request.sid
@@ -27,7 +26,7 @@ def handle_message(data):
     except Exception as e:
         print(f"Error handling message: {e}")
 
-def handle_disconnect():
+def handle_disconnect(socketio):
     try:
         session_id = request.sid
         if session_id in clients:
