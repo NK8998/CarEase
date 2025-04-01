@@ -15,15 +15,15 @@ socketio = SocketIO(app)  # Initialize globally
 
 @socketio.on("connect", namespace="/track_navigator")
 def handle_connect():
-    tracking.handle_connect(socketio)  # Call the function from tracking.py
+    tracking.handle_connect()  # Call the function from tracking.py
 
 @socketio.on("message", namespace="/track_navigator")
 def handle_message(data):
-    tracking.handle_message(socketio, data)
+    tracking.handle_message(data)
 
 @socketio.on("disconnect", namespace="/track_navigator")
 def handle_disconnect():
-    tracking.handle_disconnect(socketio)  # Call the function from tracking.py
+    tracking.handle_disconnect()  # Call the function from tracking.py
 
 
 @app.errorhandler(404)
