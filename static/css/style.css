@@ -407,6 +407,25 @@
     display: none;
 }
 
+#map{
+    width: 100%;
+    margin: auto;
+}
+
+.socket-btn{
+    padding: 5px 15px;
+    width: fit-content;
+    height: 40px;
+    font-size: 14px;
+    color: white;
+    border-radius: 4px;
+    font-weight: 500;
+    border: none;
+    background-color: #0B2154;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0);
