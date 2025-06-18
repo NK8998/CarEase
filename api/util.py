@@ -1,29 +1,41 @@
-# using SendGrid's Python Library
 import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import requests
+import json
 from dotenv import load_dotenv
-load_dotenv()  
+load_dotenv()
 
 async def sendMail(email, subject, html_content):
     try:
-        key = os.getenv("SENDGRID_API_KEY")
-        if key is None:
-            raise ValueError("SENDGRID_API_KEY not found in environment variables")
-        sg = SendGridAPIClient(api_key=key)
-        message = Mail(
-            from_email='hello@streamgrid.site',
-            to_emails=email,
-            subject=subject,
-            html_content=html_content
+        api_key = os.getenv("STMP2GO_API_KEY")
+        if not api_key:
+            raise ValueError("STMP2GO_API_KEY not found in environment variables")
+        
+        payload = {
+            "sender": "carease@streamgrid.site",
+            "to": [email],
+            "subject": subject,
+            "html_body": html_content,
+            "text_body": "This email requires HTML to view properly."  # Optional fallback
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+            "X-Smtp2go-Api-Key": api_key,
+            "accept": "application/json"
+        }
+
+        response = requests.post(
+            "https://api.smtp2go.com/v3/email/send",
+            headers=headers,
+            data=json.dumps(payload)
         )
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+
+        print("Status:", response.status_code)
+        print("Response:", response.json())
+
     except Exception as e:
-        print(e)
-    pass
+        print("Error:", e)
+
 
 async def createMail(email, name, subject, email_hash, legible_date, service_name):
     """
