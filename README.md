@@ -6,11 +6,21 @@ CarEase is designed to help users manage their car services efficiently. It allo
 
 ## Features
 - View different services offered
-- Book appointments for services
+- Book appointments for services 
 - View and manage appointments
-- Pay for services using M-Pesa
+- Pay for services using M-Pesa 
 - Service progress tracking
 - Email notifications
+
+## Technologies Used
+- **Backend**: Flask (Python)
+- **Database**: SQLite
+- **Frontend**: HTML, CSS, JavaScript
+- **Payment Integration**: M-Pesa (via Daraja API)
+- **Email Notifications**: SMTP2Go
+- **UI Components**: Mantine 
+- **Version Control**: Git
+- **Deployment**: Ngrok for local development and testing of the Daraja API integration
 
 ## Requirements
 - Python 3.x
