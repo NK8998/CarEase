@@ -9,8 +9,7 @@ CarEase is designed to help users manage their car services efficiently. It allo
 - Book appointments for services
 - View and manage appointments
 - Pay for services using M-Pesa
-- Keep track of service progress
-- Service tracking
+- Service progress tracking
 - Email notifications
 
 ## Requirements
@@ -102,4 +101,4 @@ project/
     ```bash
     python app.py
     ```
-7. Access the application in your web browser at `http://localhost:5000`
+7. Access the application in your web browser at `http://localhost:[PORT]`, where `[PORT]` is the port number specified in `app.py`.
